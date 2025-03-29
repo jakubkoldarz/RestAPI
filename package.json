@@ -11,8 +11,10 @@
     "license": "ISC",
     "description": "",
     "dependencies": {
+        "bcryptjs": "^3.0.2",
         "dotenv": "^16.4.7",
         "express.js": "^1.0.0",
+        "jsonwebtoken": "^9.0.2",
         "mysql2": "^3.14.0"
     }
 }

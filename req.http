@@ -1,3 +1,63 @@
-http://localhost:3000/user
+GET https://restapi-0k0l.onrender.com/users
+
+###
+
+POST https://restapi-0k0l.onrender.com/users
+Content-Type: application/json
+
+{
+    "username": "Kayle",
+    "password": "Babcia123"
+}
+
+###
+
+GET http://localhost:3000/users
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IktheWxlIiwicGFzc3dvcmQiOiJCYWJjaWExMjMiLCJpYXQiOjE3NDMyNDQwNDd9.a0LCmL7gWInVDUszkpOfokTwcTtVh4odYoOQlK_pMTs
+
+###
+
+POST http://localhost:3000/users
+Content-Type: application/json
+
+{
+    "username": "Kayle",
+    "password": "Babcia123"
+}
+
+###
+
+POST http://localhost:3000/auth/register
+Content-Type: application/json
+
+{
+    "username": "Jacek",
+    "password": "Dziadek123",
+    "email": "jackek19@gmail.com"
+}
+
+###
+
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{
+    "username": "Kayle",
+    "password": "Babcia123"
+}
+
+
+###
+
+GET http://localhost:3000/auth/me
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkphY2VrIiwicGFzc3dvcmQiOiJEemlhZGVrMTIzIiwiaWF0IjoxNzQzMjQ4MDkwLCJleHAiOjE3NDMyNTE2OTB9.MVqvPPDoP-v2d2kgJZbpcP6NsT6ihcUTqkFFYZRtvCo
+
+
+###
+
+GET http://localhost:3000/auth/me
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IktheWxlIiwicGFzc3dvcmQiOiJCYWJjaWExMjMiLCJpYXQiOjE3NDMyNDgxODQsImV4cCI6MTc0MzI1MTc4NH0.0uqXmtJPSOtnS8lLM7I7eKX-T3zVADIyLNkYHT0-R9U
 
 
