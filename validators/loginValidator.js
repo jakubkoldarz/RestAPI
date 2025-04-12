@@ -1,6 +1,6 @@
 const { body } = require("express-validator");
 
-const loginValidation = [
+module.exports = [
     body("password")
         .isLength({ min: 3 })
         .withMessage("Empty password provided"),
@@ -8,6 +8,3 @@ const loginValidation = [
         .isLength({ min: 3 })
         .withMessage("Empty username provided"),
 ];
-module.exports = {
-    loginValidation,
-};

@@ -37,9 +37,7 @@ const register = async (req, res) => {
             message: "Successfully created new user",
         });
     } catch (error) {
-        return res.status(500).json({
-            error,
-        });
+        return res.status(500).json({ message: error.message });
     }
 };
 
@@ -53,8 +51,7 @@ const login = async (req, res) => {
         const [result] = await db.query(
             `   
             SELECT 
-                u.username,
-                u.password
+                *
             FROM 
                 users u 
             WHERE 
@@ -75,7 +72,7 @@ const login = async (req, res) => {
         if (!authResult)
             return res.status(400).json({ message: "Invalid password" });
 
-        const token = jwt.sign(user, process.env.SECRET_TOKEN, {
+        const token = jwt.sign(userResult, process.env.SECRET_TOKEN, {
             expiresIn: "1h",
         });
 
@@ -84,7 +81,7 @@ const login = async (req, res) => {
             token,
         });
     } catch (error) {
-        return res.status(500).json(error);
+        return res.status(500).json({ message: error.message });
     }
 };
 

@@ -1,4 +1,3 @@
-const express = require("express");
 const jwt = require("jsonwebtoken");
 
 const authenticate = (req, res, next) => {
@@ -10,9 +9,8 @@ const authenticate = (req, res, next) => {
     jwt.verify(token, process.env.SECRET_TOKEN, (err, user) => {
         if (err) return res.sendStatus(403);
         req.user = user;
+        next();
     });
-
-    next();
 };
 
 module.exports = authenticate;
