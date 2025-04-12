@@ -1,11 +1,7 @@
 const db = require("../db.js");
 
-const express = require("express");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const router = express.Router();
-
-const authenticate = require("../middleware/authenticate.js");
 
 const register = async (req, res) => {
     const user = {
@@ -32,16 +28,18 @@ const register = async (req, res) => {
             return res.status(400).json({ message: "User already exists" });
 
         const hashedPassword = await bcrypt.hash(user.password, 10);
-        const [insertResult] = db.query(
+        const [insertResult] = await db.query(
             `INSERT INTO users (username, email, password) VALUES (?, ?, ?)`,
             [user.username, user.email, hashedPassword]
         );
 
-        return res.status(401).json({
-            message: insertResult,
+        return res.status(201).json({
+            message: "Successfully created new user",
         });
     } catch (error) {
-        return res.status(500).json(error);
+        return res.status(500).json({
+            error,
+        });
     }
 };
 
