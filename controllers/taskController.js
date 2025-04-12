@@ -1,3 +1,4 @@
+const { StatusCodes } = require("http-status-codes");
 const db = require("../db.js");
 
 const getTaskById = async (req, res) => {
@@ -29,7 +30,7 @@ const getTaskById = async (req, res) => {
         );
 
         if (result.length <= 0)
-            return res.status(400).json({
+            return res.status(StatusCodes.BAD_REQUEST).json({
                 message: "No task with that ID exists",
             });
 
@@ -37,7 +38,9 @@ const getTaskById = async (req, res) => {
             message: result[0],
         });
     } catch (error) {
-        return res.status(500).json({ message: error.message });
+        return res
+            .status(StatusCodes.INTERNAL_SERVER_ERROR)
+            .json({ message: error.message });
     }
 };
 
@@ -66,11 +69,13 @@ const getAllTasks = async (req, res) => {
             [user.id_user]
         );
 
-        if (result.length <= 0) return res.status(200).json([]);
+        if (result.length <= 0) return res.status(StatusCodes.OK).json([]);
 
         return res.json({ tasks: result });
     } catch (error) {
-        return res.status(500).json({ message: error.message });
+        return res
+            .status(StatusCodes.INTERNAL_SERVER_ERROR)
+            .json({ message: error.message });
     }
 };
 
@@ -101,12 +106,14 @@ const insertTask = async (req, res) => {
             [task.name, task.description, user.id_user]
         );
 
-        return res.status(201).json({
+        return res.status(StatusCodes.CREATED).json({
             message: "Task created successfully",
             taskId: result.insertId,
         });
     } catch (error) {
-        return res.status(500).json({ message: error.message });
+        return res
+            .status(StatusCodes.INTERNAL_SERVER_ERROR)
+            .json({ message: error.message });
     }
 };
 
@@ -136,13 +143,15 @@ const updateTask = async (req, res) => {
 
         if (result.affectedRows === 0) {
             return res
-                .status(400)
+                .status(StatusCodes.BAD_REQUEST)
                 .json({ message: "Task not found or not allowed to update" });
         }
 
-        res.status(200).json({ message: "Task updated" });
+        res.status(StatusCodes.OK).json({ message: "Task updated" });
     } catch (error) {
-        return res.status(500).json({ message: error.message });
+        return res
+            .status(StatusCodes.INTERNAL_SERVER_ERROR)
+            .json({ message: error.message });
     }
 };
 
@@ -162,16 +171,18 @@ const deleteTask = async (req, res) => {
         );
 
         if (result.affectedRows === 0) {
-            return res.status(400).json({
+            return res.status(StatusCodes.BAD_REQUEST).json({
                 message: "Task not found",
             });
         }
 
-        res.status(200).json({
+        res.status(StatusCodes.OK).json({
             message: "Task deleted successfully",
         });
     } catch (error) {
-        return res.status(500).json({ message: error.message });
+        return res
+            .status(StatusCodes.INTERNAL_SERVER_ERROR)
+            .json({ message: error.message });
     }
 };
 

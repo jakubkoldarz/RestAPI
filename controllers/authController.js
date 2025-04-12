@@ -1,6 +1,7 @@
 const db = require("../db.js");
 
 const bcrypt = require("bcryptjs");
+const { StatusCodes } = require("http-status-codes");
 const jwt = require("jsonwebtoken");
 
 const register = async (req, res) => {
@@ -25,7 +26,9 @@ const register = async (req, res) => {
         );
 
         if (result.length > 0)
-            return res.status(400).json({ message: "User already exists" });
+            return res
+                .status(StatusCodes.BAD_REQUEST)
+                .json({ message: "User already exists" });
 
         const hashedPassword = await bcrypt.hash(user.password, 10);
         const [insertResult] = await db.query(
@@ -33,11 +36,13 @@ const register = async (req, res) => {
             [user.username, user.email, hashedPassword]
         );
 
-        return res.status(201).json({
+        return res.status(StatusCodes.CREATED).json({
             message: "Successfully created new user",
         });
     } catch (error) {
-        return res.status(500).json({ message: error.message });
+        return res
+            .status(StatusCodes.INTERNAL_SERVER_ERROR)
+            .json({ message: error.message });
     }
 };
 
@@ -61,7 +66,9 @@ const login = async (req, res) => {
         );
 
         if (result.length <= 0)
-            return res.status(400).json({ message: "User does not exists" });
+            return res
+                .status(StatusCodes.BAD_REQUEST)
+                .json({ message: "User does not exists" });
 
         const userResult = result[0];
         const authResult = await bcrypt.compare(
@@ -70,7 +77,9 @@ const login = async (req, res) => {
         );
 
         if (!authResult)
-            return res.status(400).json({ message: "Invalid password" });
+            return res
+                .status(StatusCodes.BAD_REQUEST)
+                .json({ message: "Invalid password" });
 
         const token = jwt.sign(userResult, process.env.SECRET_TOKEN, {
             expiresIn: "1h",
@@ -81,7 +90,9 @@ const login = async (req, res) => {
             token,
         });
     } catch (error) {
-        return res.status(500).json({ message: error.message });
+        return res
+            .status(StatusCodes.INTERNAL_SERVER_ERROR)
+            .json({ message: error.message });
     }
 };
 
