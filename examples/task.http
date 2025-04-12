@@ -1,0 +1,98 @@
+GET http://localhost:3000/task
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IlRlc3QxMjMiLCJwYXNzd29yZCI6IlRlc3QxMjMiLCJpYXQiOjE3NDQ0NDg3NzYsImV4cCI6MTc0NDQ1MjM3Nn0.2s6aDPRtbQ-sWBRhQNYtKL7MxR4HuyMVwQShAwGU50E
+
+###
+
+GET http://localhost:3000/task/3
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IlRlc3QxMjMiLCJwYXNzd29yZCI6IlRlc3QxMjMiLCJpYXQiOjE3NDQ0NDg3NzYsImV4cCI6MTc0NDQ1MjM3Nn0.2s6aDPRtbQ-sWBRhQNYtKL7MxR4HuyMVwQShAwGU50E
+
+###
+
+POST http://localhost:3000/task
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IlRlc3QxMjMiLCJwYXNzd29yZCI6IlRlc3QxMjMiLCJpYXQiOjE3NDQ0NDg3NzYsImV4cCI6MTc0NDQ1MjM3Nn0.2s6aDPRtbQ-sWBRhQNYtKL7MxR4HuyMVwQShAwGU50E
+Content-Type: application/json
+
+{
+    "taskName": "Task64"
+}
+
+###
+
+POST http://localhost:3000/task
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IlRlc3QxMjMiLCJwYXNzd29yZCI6IlRlc3QxMjMiLCJpYXQiOjE3NDQ0NDg3NzYsImV4cCI6MTc0NDQ1MjM3Nn0.2s6aDPRtbQ-sWBRhQNYtKL7MxR4HuyMVwQShAwGU50E
+Content-Type: application/json
+
+{
+    "taskName": "Task65",
+	"taskDescription": "Task Description Here"
+}
+
+###
+
+PUT http://localhost:3000/task/7
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IlRlc3QxMjMiLCJwYXNzd29yZCI6IlRlc3QxMjMiLCJpYXQiOjE3NDQ0NDg3NzYsImV4cCI6MTc0NDQ1MjM3Nn0.2s6aDPRtbQ-sWBRhQNYtKL7MxR4HuyMVwQShAwGU50E
+Content-Type: application/json
+
+{
+    "taskName": "Task65"
+}
+
+###
+
+PUT http://localhost:3000/task/6
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IlRlc3QxMjMiLCJwYXNzd29yZCI6IlRlc3QxMjMiLCJpYXQiOjE3NDQ0NDg3NzYsImV4cCI6MTc0NDQ1MjM3Nn0.2s6aDPRtbQ-sWBRhQNYtKL7MxR4HuyMVwQShAwGU50E
+Content-Type: application/json
+
+{
+    "taskDescription": "Updated Description"
+}
+
+###
+
+PUT http://localhost:3000/task/6
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IlRlc3QxMjMiLCJwYXNzd29yZCI6IlRlc3QxMjMiLCJpYXQiOjE3NDQ0NDg3NzYsImV4cCI6MTc0NDQ1MjM3Nn0.2s6aDPRtbQ-sWBRhQNYtKL7MxR4HuyMVwQShAwGU50E
+Content-Type: application/json
+
+{
+    "taskDescription": null
+}
+
+###
+
+PUT http://localhost:3000/task/7
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IlRlc3QxMjMiLCJwYXNzd29yZCI6IlRlc3QxMjMiLCJpYXQiOjE3NDQ0NDg3NzYsImV4cCI6MTc0NDQ1MjM3Nn0.2s6aDPRtbQ-sWBRhQNYtKL7MxR4HuyMVwQShAwGU50E
+Content-Type: application/json
+
+{
+    "finished": 1
+}
+
+###
+
+PUT http://localhost:3000/task/7
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IlRlc3QxMjMiLCJwYXNzd29yZCI6IlRlc3QxMjMiLCJpYXQiOjE3NDQ0NDg3NzYsImV4cCI6MTc0NDQ1MjM3Nn0.2s6aDPRtbQ-sWBRhQNYtKL7MxR4HuyMVwQShAwGU50E
+Content-Type: application/json
+
+{
+	"taskName": "NewTaskName",
+    "finished": 1
+}
+
+###
+
+PUT http://localhost:3000/task/7
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IlRlc3QxMjMiLCJwYXNzd29yZCI6IlRlc3QxMjMiLCJpYXQiOjE3NDQ0NDg3NzYsImV4cCI6MTc0NDQ1MjM3Nn0.2s6aDPRtbQ-sWBRhQNYtKL7MxR4HuyMVwQShAwGU50E
+Content-Type: application/json
+
+{
+	"taskName": "NewTaskName",
+	"taskDescription": "New Task Description",
+    "finished": 1
+}
+
+###
+
+DELETE http://localhost:3000/task/7
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IlRlc3QxMjMiLCJwYXNzd29yZCI6IlRlc3QxMjMiLCJpYXQiOjE3NDQ0NDg3NzYsImV4cCI6MTc0NDQ1MjM3Nn0.2s6aDPRtbQ-sWBRhQNYtKL7MxR4HuyMVwQShAwGU50E
+
+
