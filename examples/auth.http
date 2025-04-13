@@ -19,9 +19,9 @@ Content-Type: application/json
 
 ###
 
-GET http://localhost:3000/auth/me
+GET http://localhost:5000/auth/me
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkphY2VrIiwicGFzc3dvcmQiOiJEemlhZGVrMTIzIiwiaWF0IjoxNzQzMjQ4MDkwLCJleHAiOjE3NDMyNTE2OTB9.MVqvPPDoP-v2d2kgJZbpcP6NsT6ihcUTqkFFYZRtvCo
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VyIjoyLCJ1c2VybmFtZSI6ImFkbWluIiwiZW1haWwiOiJqYWt1YjIxM3hAZ21haWwuY29tIiwicGFzc3dvcmQiOiIkMmIkMTAkdW9QNmtJR1M2YmpGTndFQkNwZVFMT1lEQUNVTW0wdWRZaEhPQlNSb0w2b0NmZWJDOG1PUnEiLCJpYXQiOjE3NDQ1NDE3NjIsImV4cCI6MTc0NDU0NTM2Mn0.ZWDBjgDtaT39k1oorAnmRfpOvJAEmdTV5QnQev5SDtg
 
 
 ###

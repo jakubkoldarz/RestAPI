@@ -122,29 +122,50 @@ const updateTask = async (req, res) => {
     const { name, description, isFinished } = req.body;
     const user = req.user;
 
-    const finished = isFinished
-        ? "DATE_ADD(CURRENT_TIMESTAMP, INTERVAL 2 HOUR)"
-        : "NULL";
+    const queryValues = [];
+    const insertValues = [];
+
+    if (name && name.trim().length > 0) {
+        queryValues.push(`name = ?`);
+        insertValues.push(name);
+    }
+
+    if (description) {
+        queryValues.push(`description = ?`);
+        insertValues.push(description);
+    }
+
+    if (isFinished === 0) {
+        queryValues.push(`finishedAt = NULL`);
+    } else if (isFinished === 1) {
+        queryValues.push(
+            `finishedAt = DATE_ADD(CURRENT_TIMESTAMP, INTERVAL 2 HOUR)`
+        );
+    }
+
+    if (queryValues.length <= 0) {
+        return res.status(StatusCodes.BAD_REQUEST).json({
+            message: "No data provided to update",
+        });
+    }
 
     try {
         const [result] = await db.query(
             `   UPDATE tasks
                 SET
-                    name = ?,
-                    description = ?,
-                    finishedAt = ${finished}
+                    ${queryValues.join(", ")}
                 WHERE 
                     id_task = ? AND
                     id_user = ?
                     ;
                 `,
-            [name, description, id, user.id_user]
+            [...insertValues, id, user.id_user]
         );
 
         if (result.affectedRows === 0) {
             return res
                 .status(StatusCodes.BAD_REQUEST)
-                .json({ message: "Task not found or not allowed to update" });
+                .json({ message: "Task not found" });
         }
 
         res.status(StatusCodes.OK).json({ message: "Task updated" });

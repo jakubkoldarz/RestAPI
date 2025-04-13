@@ -15,7 +15,7 @@ router
     .get("/:id", authenticate, getTaskById)
     .get("/", authenticate, getAllTasks)
     .post("/", validateTask, authenticate, insertTask)
-    .put("/:id", validateTask, authenticate, updateTask)
+    .put("/:id", authenticate, updateTask)
     .delete("/:id", authenticate, deleteTask);
 
 module.exports = router;

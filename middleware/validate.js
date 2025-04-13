@@ -2,6 +2,7 @@ const { validationResult } = require("express-validator");
 const registerValidator = require("../validators/registerValidator");
 const loginValidator = require("../validators/loginValidator");
 const taskValidator = require("../validators/taskValidator");
+const { StatusCodes } = require("http-status-codes");
 
 const validate = async (request, validator) => {
     await Promise.all(validator.map((v) => v.run(request)));
@@ -18,7 +19,7 @@ const validateRegister = async (req, res, next) => {
     const result = await validate(req, registerValidator);
 
     if (result.length > 0) {
-        return res.status(400).json({
+        return res.status(StatusCodes.BAD_REQUEST).json({
             messages: result,
         });
     }
@@ -30,7 +31,7 @@ const validateLogin = async (req, res, next) => {
     const result = await validate(req, loginValidator);
 
     if (result.length > 0) {
-        return res.status(400).json({
+        return res.status(StatusCodes.BAD_REQUEST).json({
             messages: result,
         });
     }
@@ -42,7 +43,7 @@ const validateTask = async (req, res, next) => {
     const result = await validate(req, taskValidator);
 
     if (result.length > 0) {
-        return res.status(400).json({
+        return res.status(StatusCodes.BAD_REQUEST).json({
             messages: result,
         });
     }
