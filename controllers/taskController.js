@@ -57,13 +57,18 @@ const getAllTasks = async (req, res) => {
                     t.description,
                     t.finishedAt,
                     t.id_user,
-                    t.id_tag
+                    tg.name AS tagName,
+                    tg.color AS tagColor
                 FROM 
                     tasks t 
                 INNER JOIN
                     users u
                 ON
                     u.id_user = t.id_user
+                LEFT JOIN
+                    tags tg
+                ON
+                    tg.id_tag = t.id_tag
                 WHERE 
                     u.id_user = ?;
                 `,
