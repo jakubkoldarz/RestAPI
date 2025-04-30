@@ -56,7 +56,8 @@ const getAllTasks = async (req, res) => {
                     t.startedAt,
                     t.description,
                     t.finishedAt,
-                    t.id_user
+                    t.id_user,
+                    t.id_tag
                 FROM 
                     tasks t 
                 INNER JOIN
@@ -119,7 +120,7 @@ const insertTask = async (req, res) => {
 
 const updateTask = async (req, res) => {
     const { id } = req.params;
-    const { name, description, isFinished } = req.body;
+    const { name, description, isFinished, id_tag } = req.body;
     const user = req.user;
 
     const queryValues = [];
@@ -133,6 +134,11 @@ const updateTask = async (req, res) => {
     if (description) {
         queryValues.push(`description = ?`);
         insertValues.push(description);
+    }
+
+    if (id_tag) {
+        queryValues.push(`id_tag = ?`);
+        insertValues.push(id_tag);
     }
 
     if (isFinished === 0) {
@@ -207,10 +213,44 @@ const deleteTask = async (req, res) => {
     }
 };
 
+const setTags = async (req, res) => {
+    const { id_tag } = req.body;
+    const { tasks } = req.body;
+    const user = req.user;
+
+    const placeholers = tasks.map(() => "?").join(", ");
+
+    try {
+        const [result] = await db.query(
+            `   
+                UPDATE tasks
+                SET id_tag = ?
+                WHERE id_user = ? AND id_task IN (${placeholers});
+                `,
+            [id_tag, user.id_user, ...tasks]
+        );
+
+        if (result.affectedRows === 0) {
+            return res.status(StatusCodes.BAD_REQUEST).json({
+                message: "Task not found",
+            });
+        }
+
+        res.status(StatusCodes.OK).json({
+            message: "Tasks set successfully",
+        });
+    } catch (error) {
+        return res
+            .status(StatusCodes.INTERNAL_SERVER_ERROR)
+            .json({ message: error.message });
+    }
+};
+
 module.exports = {
     getTaskById,
     getAllTasks,
     insertTask,
     updateTask,
     deleteTask,
+    setTags,
 };

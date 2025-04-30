@@ -8,14 +8,19 @@ const {
     insertTask,
     updateTask,
     deleteTask,
+    setTags,
 } = require("../controllers/taskController.js");
-const { validateTask } = require("../middleware/validate.js");
+const {
+    validateTask,
+    validateMultipleTasksTags,
+} = require("../middleware/validate.js");
 
 router
     .get("/:id", authenticate, getTaskById)
     .get("/", authenticate, getAllTasks)
     .post("/", validateTask, authenticate, insertTask)
     .put("/:id", authenticate, updateTask)
-    .delete("/:id", authenticate, deleteTask);
+    .delete("/:id", authenticate, deleteTask)
+    .post("/set-tags", authenticate, validateMultipleTasksTags, setTags);
 
 module.exports = router;

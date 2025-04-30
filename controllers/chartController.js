@@ -69,9 +69,11 @@ const getMonthlyChart = async (req, res) => {
         const labels = result.map((row) => row.date);
         const values = result.map((row) => row.completed_tasks);
 
-        return res.status(200).json({ labels, values });
+        return res.status(StatusCodes.OK).json({ labels, values });
     } catch (error) {
-        return res.status(500).json({ message: error.message });
+        return res
+            .status(StatusCodes.INTERNAL_SERVER_ERROR)
+            .json({ message: error.message });
     }
 };
 
