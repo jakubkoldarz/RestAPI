@@ -100,8 +100,37 @@ const me = (req, res) => {
     res.json(req.user);
 };
 
+const changePassword = async (req, res) => {
+    const user = req.user;
+    const newPassword = req.body.password;
+
+    try {
+        const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+        const [result] = await db.query(
+            `
+                UPDATE 
+                    users
+                SET
+                    password = ?
+                WHERE
+                    id_user = ?
+                ;          
+            `,
+            [hashedPassword, user.id_user]
+        );
+
+        return res.status(StatusCodes.OK).json(result);
+    } catch (error) {
+        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+            message: error.message,
+        });
+    }
+};
+
 module.exports = {
     register,
     login,
     me,
+    changePassword,
 };

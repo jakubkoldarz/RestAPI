@@ -100,7 +100,7 @@ const insertTask = async (req, res) => {
                     ?,
                     ?,
                     ?,
-                    DATE_ADD(CURRENT_TIMESTAMP, INTERVAL 2 HOUR)
+                    CURRENT_TIMESTAMP
                 );
                 `,
             [task.name, task.description, user.id_user]
