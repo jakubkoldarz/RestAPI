@@ -207,10 +207,81 @@ const deleteTask = async (req, res) => {
     }
 };
 
+const getReport = (interval = null) => async (req, res) => {
+    const user = req.user;
+
+    try {
+        const params = [user.id_user];
+        let dateCondition = '';
+
+        if (interval) {
+            dateCondition = `AND t.startedAt >= NOW() - INTERVAL ${interval}`;
+        }
+
+        const [tagged] = await db.query(
+            `
+            SELECT 
+                tg.name AS tagName,
+                tg.color,
+                COUNT(t.id_task) AS total,
+                SUM(CASE WHEN t.finishedAt IS NOT NULL THEN 1 ELSE 0 END) AS finished,
+                SUM(CASE WHEN t.finishedAt IS NULL THEN 1 ELSE 0 END) AS unfinished
+            FROM 
+                tags tg
+            LEFT JOIN tasks t ON 
+                t.id_tag = tg.id_tag
+                AND t.id_user = tg.id_user
+                ${dateCondition}
+            WHERE tg.id_user = ?
+            GROUP BY tg.id_tag
+            ORDER BY total DESC, tagName
+            `,
+            params
+        );
+
+        const [untagged] = await db.query(
+            `
+            SELECT 
+                'No tag' AS tagName,
+                NULL AS color,
+                COUNT(*) AS total,
+                SUM(CASE WHEN finishedAt IS NOT NULL THEN 1 ELSE 0 END) AS finished,
+                SUM(CASE WHEN finishedAt IS NULL THEN 1 ELSE 0 END) AS unfinished
+            FROM 
+                tasks
+            WHERE
+                id_user = ?
+                AND id_tag IS NULL
+                ${interval ? `AND startedAt >= NOW() - INTERVAL ${interval}` : ''}
+            `,
+            [user.id_user]
+        );
+
+        res.json({
+            tasksStats: [...tagged, ...untagged]
+        });
+    } catch (error) {
+        console.error(error);
+        return res
+            .status(StatusCodes.INTERNAL_SERVER_ERROR)
+            .json({ message: error.message });
+    }
+};
+
+
+const getWeeklyReport = getReport('1 WEEK');
+const getMonthlyReport = getReport('1 MONTH');
+const getYearlyReport = getReport('1 YEAR');
+const getAllTimeReport = getReport();
+
 module.exports = {
     getTaskById,
     getAllTasks,
     insertTask,
     updateTask,
     deleteTask,
+    getWeeklyReport,
+    getMonthlyReport,
+    getYearlyReport,
+    getAllTimeReport
 };
