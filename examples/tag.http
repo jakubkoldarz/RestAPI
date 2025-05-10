@@ -1,39 +1,36 @@
-GET http://localhost:5000/task
+GET http://localhost:5000/tag
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VyIjo1LCJ1c2VybmFtZSI6InVzZXIxIiwiZW1haWwiOiJ1c2VyQGdtYWlsLmNvbSIsInBhc3N3b3JkIjoiJDJiJDEwJE9BWUlvaEs1NXUxZEVJdi9TVlNoUGVRT2ZOZTlTaWFIL2JvQlFHUFpMekU4bmo4WjdJcVh1IiwiaWF0IjoxNzQ2MDEzNzI4fQ.XvEtc1eQacSjg9TejuSHHEiPRQPC60XH_7ts1rjNW80 
+
 ###
 
-GET http://localhost:5000/task/30
+GET http://localhost:5000/tag/1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VyIjo1LCJ1c2VybmFtZSI6InVzZXIxIiwiZW1haWwiOiJ1c2VyQGdtYWlsLmNvbSIsInBhc3N3b3JkIjoiJDJiJDEwJE9BWUlvaEs1NXUxZEVJdi9TVlNoUGVRT2ZOZTlTaWFIL2JvQlFHUFpMekU4bmo4WjdJcVh1IiwiaWF0IjoxNzQ2MDEzNzI4fQ.XvEtc1eQacSjg9TejuSHHEiPRQPC60XH_7ts1rjNW80 
-### 
 
-POST http://localhost:5000/task
+###
+
+POST http://localhost:5000/tag
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VyIjo1LCJ1c2VybmFtZSI6InVzZXIxIiwiZW1haWwiOiJ1c2VyQGdtYWlsLmNvbSIsInBhc3N3b3JkIjoiJDJiJDEwJE9BWUlvaEs1NXUxZEVJdi9TVlNoUGVRT2ZOZTlTaWFIL2JvQlFHUFpMekU4bmo4WjdJcVh1IiwiaWF0IjoxNzQ2MDEzNzI4fQ.XvEtc1eQacSjg9TejuSHHEiPRQPC60XH_7ts1rjNW80 
-
+    
 {
-    "name": "Bojowe zadanie"
+    "name": "Nowe tagi",
+    "color": "#fff000"
 }
+
 ###
 
-PUT http://localhost:5000/task/4
-Content-Type: application/json
+DELETE http://localhost:5000/tag/1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VyIjo1LCJ1c2VybmFtZSI6InVzZXIxIiwiZW1haWwiOiJ1c2VyQGdtYWlsLmNvbSIsInBhc3N3b3JkIjoiJDJiJDEwJE9BWUlvaEs1NXUxZEVJdi9TVlNoUGVRT2ZOZTlTaWFIL2JvQlFHUFpMekU4bmo4WjdJcVh1IiwiaWF0IjoxNzQ2MDEzNzI4fQ.XvEtc1eQacSjg9TejuSHHEiPRQPC60XH_7ts1rjNW80 
-
-{
-    "id_tag": 2
-}
+    
 ###
 
-DELETE http://localhost:5000/task/2
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VyIjo1LCJ1c2VybmFtZSI6InVzZXIxIiwiZW1haWwiOiJ1c2VyQGdtYWlsLmNvbSIsInBhc3N3b3JkIjoiJDJiJDEwJE9BWUlvaEs1NXUxZEVJdi9TVlNoUGVRT2ZOZTlTaWFIL2JvQlFHUFpMekU4bmo4WjdJcVh1IiwiaWF0IjoxNzQ2MDEzNzI4fQ.XvEtc1eQacSjg9TejuSHHEiPRQPC60XH_7ts1rjNW80 
-
-###
-POST http://localhost:5000/task/set-tags
+PUT http://localhost:5000/tag/2
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VyIjo1LCJ1c2VybmFtZSI6InVzZXIxIiwiZW1haWwiOiJ1c2VyQGdtYWlsLmNvbSIsInBhc3N3b3JkIjoiJDJiJDEwJE9BWUlvaEs1NXUxZEVJdi9TVlNoUGVRT2ZOZTlTaWFIL2JvQlFHUFpMekU4bmo4WjdJcVh1IiwiaWF0IjoxNzQ2MDEzNzI4fQ.XvEtc1eQacSjg9TejuSHHEiPRQPC60XH_7ts1rjNW80 
 Content-Type: application/json
 
-// może być bez id_tag pola, wtedy tagi będą usunięte z zadań
 {
-    "tasks": [4, 5, 36],
-    "id_tag": 5 
+    "name": "Zakupy",
+    "color": "#0bf000"
 }
+
+###

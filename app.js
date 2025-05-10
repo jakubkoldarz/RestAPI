@@ -15,13 +15,10 @@ app.use(
 
 const PORT = process.env.PORT || 3000;
 
-const authRouter = require("./routes/auth");
-const taskRouter = require("./routes/task");
-const chartRouter = require("./routes/chart");
-
 app.use(express.json());
-app.use("/auth", authRouter);
-app.use("/task", taskRouter);
-app.use("/chart", chartRouter);
+app.use("/auth", require("./routes/auth"));
+app.use("/task", require("./routes/task"));
+app.use("/chart", require("./routes/chart"));
+app.use("/tag", require("./routes/tag"));
 
 app.listen(PORT, () => console.log("App is running on port 3000"));
