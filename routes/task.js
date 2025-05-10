@@ -8,6 +8,10 @@ const {
     insertTask,
     updateTask,
     deleteTask,
+    getWeeklyReport,
+    getMonthlyReport,
+    getYearlyReport,
+    getAllTimeReport
     setTags,
 } = require("../controllers/taskController.js");
 const {
@@ -16,8 +20,12 @@ const {
 } = require("../middleware/validate.js");
 
 router
-    .get("/:id", authenticate, getTaskById)
+    .get("/report/week", authenticate, getWeeklyReport)
+    .get("/report/month", authenticate, getMonthlyReport)
+    .get("/report/year", authenticate, getYearlyReport)
+    .get("/report", authenticate, getAllTimeReport)
     .get("/", authenticate, getAllTasks)
+    .get("/:id", authenticate, getTaskById)
     .post("/", validateTask, authenticate, insertTask)
     .put("/:id", authenticate, updateTask)
     .delete("/:id", authenticate, deleteTask)
