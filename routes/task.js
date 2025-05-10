@@ -11,7 +11,7 @@ const {
     getWeeklyReport,
     getMonthlyReport,
     getYearlyReport,
-    getAllTimeReport
+    getAllTimeReport,
     setTags,
 } = require("../controllers/taskController.js");
 const {

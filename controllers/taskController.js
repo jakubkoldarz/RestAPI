@@ -218,19 +218,21 @@ const deleteTask = async (req, res) => {
     }
 };
 
-const getReport = (interval = null) => async (req, res) => {
-    const user = req.user;
+const getReport =
+    (interval = null) =>
+    async (req, res) => {
+        const user = req.user;
 
-    try {
-        const params = [user.id_user];
-        let dateCondition = '';
+        try {
+            const params = [user.id_user];
+            let dateCondition = "";
 
-        if (interval) {
-            dateCondition = `AND t.startedAt >= NOW() - INTERVAL ${interval}`;
-        }
+            if (interval) {
+                dateCondition = `AND t.startedAt >= NOW() - INTERVAL ${interval}`;
+            }
 
-        const [tagged] = await db.query(
-            `
+            const [tagged] = await db.query(
+                `
             SELECT 
                 tg.name AS tagName,
                 tg.color,
@@ -247,11 +249,11 @@ const getReport = (interval = null) => async (req, res) => {
             GROUP BY tg.id_tag
             ORDER BY total DESC, tagName
             `,
-            params
-        );
+                params
+            );
 
-        const [untagged] = await db.query(
-            `
+            const [untagged] = await db.query(
+                `
             SELECT 
                 'No tag' AS tagName,
                 NULL AS color,
@@ -263,16 +265,24 @@ const getReport = (interval = null) => async (req, res) => {
             WHERE
                 id_user = ?
                 AND id_tag IS NULL
-                ${interval ? `AND startedAt >= NOW() - INTERVAL ${interval}` : ''}
+                ${
+                    interval
+                        ? `AND startedAt >= NOW() - INTERVAL ${interval}`
+                        : ""
+                }
             `,
-            [user.id_user]
-        );
+                [user.id_user]
+            );
 
-        res.json({
-            tasksStats: [...tagged, ...untagged]
-        });
-    } catch (error) {
-        console.error(error);
+            res.json({
+                tasksStats: [...tagged, ...untagged],
+            });
+        } catch (error) {
+            res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+                message: error.message,
+            });
+        }
+    };
 
 const setTags = async (req, res) => {
     const { id_tag } = req.body;
@@ -307,10 +317,9 @@ const setTags = async (req, res) => {
     }
 };
 
-
-const getWeeklyReport = getReport('1 WEEK');
-const getMonthlyReport = getReport('1 MONTH');
-const getYearlyReport = getReport('1 YEAR');
+const getWeeklyReport = getReport("1 WEEK");
+const getMonthlyReport = getReport("1 MONTH");
+const getYearlyReport = getReport("1 YEAR");
 const getAllTimeReport = getReport();
 
 module.exports = {
@@ -322,6 +331,6 @@ module.exports = {
     getWeeklyReport,
     getMonthlyReport,
     getYearlyReport,
-    getAllTimeReport
+    getAllTimeReport,
     setTags,
 };

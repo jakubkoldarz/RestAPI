@@ -37,3 +37,7 @@ Content-Type: application/json
     "tasks": [4, 5, 36],
     "id_tag": 5 
 }
+
+###
+GET http://localhost:5000/task/report/week
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VyIjo1LCJ1c2VybmFtZSI6InVzZXIxIiwiZW1haWwiOiJ1c2VyQGdtYWlsLmNvbSIsInBhc3N3b3JkIjoiJDJiJDEwJE9BWUlvaEs1NXUxZEVJdi9TVlNoUGVRT2ZOZTlTaWFIL2JvQlFHUFpMekU4bmo4WjdJcVh1IiwiaWF0IjoxNzQ2MDEzNzI4fQ.XvEtc1eQacSjg9TejuSHHEiPRQPC60XH_7ts1rjNW80 
