@@ -97,6 +97,10 @@ const insertTask = async (req, res) => {
         task.description = null;
     }
 
+    const startedAt = req.body.startedAt
+    ? new Date(req.body.startedAt)
+    : new Date(Date.now() + 2 * 60 * 60 * 1000);
+
     try {
         const [result] = await db.query(
             `   
@@ -106,10 +110,10 @@ const insertTask = async (req, res) => {
                     ?,
                     ?,
                     ?,
-                    CURRENT_TIMESTAMP
+                    ?
                 );
                 `,
-            [task.name, task.description, user.id_user]
+            [task.name, task.description, user.id_user, startedAt]
         );
 
         return res.status(StatusCodes.CREATED).json({
@@ -146,13 +150,22 @@ const updateTask = async (req, res) => {
         insertValues.push(id_tag);
     }
 
+    if (startedAt !== undefined) {
+    queryValues.push(`startedAt = ?`);
+    insertValues.push(startedAt ? new Date(startedAt) : null);
+}
+
     if (isFinished === 0) {
         queryValues.push(`finishedAt = NULL`);
     } else if (isFinished === 1) {
-        queryValues.push(
-            `finishedAt = DATE_ADD(CURRENT_TIMESTAMP, INTERVAL 2 HOUR)`
-        );
-    }
+        if (finishedAt) {
+            queryValues.push(`finishedAt = ?`);
+            insertValues.push(new Date(finishedAt));
+        } else {
+            queryValues.push(`finishedAt = ?`);
+            insertValues.push(new Date(Date.now() + 2 * 60 * 60 * 1000));
+        }
+}
 
     if (queryValues.length <= 0) {
         return res.status(StatusCodes.BAD_REQUEST).json({
