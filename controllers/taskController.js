@@ -85,11 +85,16 @@ const insertTask = async (req, res) => {
     const task = {
         name: req.body.name,
         description: req.body.description,
+        startedAt: req.body.startedAt,
     };
 
     if (task.description && task.description.trim() === "") {
         task.description = null;
     }
+
+    const startedAt = task.startedAt
+        ? new Date(task.startedAt)
+        : new Date(Date.now() + 2 * 60 * 60 * 1000);
 
     try {
         const [result] = await db.query(
@@ -100,10 +105,10 @@ const insertTask = async (req, res) => {
                     ?,
                     ?,
                     ?,
-                    DATE_ADD(CURRENT_TIMESTAMP, INTERVAL 2 HOUR)
+                    ?
                 );
                 `,
-            [task.name, task.description, user.id_user]
+            [task.name, task.description, user.id_user, startedAt]
         );
 
         return res.status(StatusCodes.CREATED).json({
@@ -119,7 +124,7 @@ const insertTask = async (req, res) => {
 
 const updateTask = async (req, res) => {
     const { id } = req.params;
-    const { name, description, isFinished } = req.body;
+    const { name, description, isFinished, startedAt, finishedAt } = req.body;
     const user = req.user;
 
     const queryValues = [];
@@ -135,12 +140,21 @@ const updateTask = async (req, res) => {
         insertValues.push(description);
     }
 
+    if (startedAt !== undefined) {
+        queryValues.push(`startedAt = ?`);
+        insertValues.push(startedAt ? new Date(startedAt) : null);
+    }
+
     if (isFinished === 0) {
         queryValues.push(`finishedAt = NULL`);
     } else if (isFinished === 1) {
-        queryValues.push(
-            `finishedAt = DATE_ADD(CURRENT_TIMESTAMP, INTERVAL 2 HOUR)`
-        );
+        if (finishedAt) {
+            queryValues.push(`finishedAt = ?`);
+            insertValues.push(new Date(finishedAt));
+        } else {
+            queryValues.push(`finishedAt = ?`);
+            insertValues.push(new Date(Date.now() + 2 * 60 * 60 * 1000));
+        }
     }
 
     if (queryValues.length <= 0) {
