@@ -125,7 +125,7 @@ const insertTask = async (req, res) => {
 
 const updateTask = async (req, res) => {
     const { id } = req.params;
-    const { name, description, isFinished, id_tag } = req.body;
+    const { name, description, isFinished, id_tag, startedAt } = req.body;
     const user = req.user;
 
     const queryValues = [];
@@ -152,6 +152,11 @@ const updateTask = async (req, res) => {
         queryValues.push(
             `finishedAt = DATE_ADD(CURRENT_TIMESTAMP, INTERVAL 2 HOUR)`
         );
+    }
+
+    if (startedAt) {
+        queryValues.push(`startedAt = ?`);
+        insertValues.push(new Date(startedAt));
     }
 
     if (queryValues.length <= 0) {
