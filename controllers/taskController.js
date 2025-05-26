@@ -98,8 +98,8 @@ const insertTask = async (req, res) => {
     }
 
     const startedAt = req.body.startedAt
-    ? new Date(req.body.startedAt)
-    : new Date(Date.now() + 2 * 60 * 60 * 1000);
+        ? new Date(req.body.startedAt)
+        : new Date(Date.now() + 2 * 60 * 60 * 1000);
 
     try {
         const [result] = await db.query(
@@ -150,10 +150,10 @@ const updateTask = async (req, res) => {
         insertValues.push(id_tag);
     }
 
-    if (startedAt !== undefined) {
-    queryValues.push(`startedAt = ?`);
-    insertValues.push(startedAt ? new Date(startedAt) : null);
-}
+    if (startedAt) {
+        queryValues.push(`startedAt = ?`);
+        insertValues.push(startedAt ? new Date(startedAt) : null);
+    }
 
     if (isFinished === 0) {
         queryValues.push(`finishedAt = NULL`);
@@ -165,7 +165,7 @@ const updateTask = async (req, res) => {
             queryValues.push(`finishedAt = ?`);
             insertValues.push(new Date(Date.now() + 2 * 60 * 60 * 1000));
         }
-}
+    }
 
     if (startedAt) {
         queryValues.push(`startedAt = ?`);
